@@ -4,6 +4,14 @@
 #include <fstream>
 using namespace std;
 
+/* ------------------------------------------NOTAS---------------------------------------------------
+Los puntos de la tarea que requerían hacer un análisis sobre alguna operación
+están en el google Colab, el link a este mismo se encuentra en el README de este
+repositorio.
+Algunos atributos y/o métodos se encuentran documentados ya que hacen parte de la tarea,
+sin embargo, al ser solo utilizados para extraer datos, están documentados. No fueron borrados por si
+se desea hacer una revisión de cómo se hizo la extracción de los datos.*/
+
 template <typename T>
 
 class Vector {
@@ -11,11 +19,10 @@ private:
     T* storage_ ;
     unsigned int capacity_;
     unsigned int size_;
-    unsigned int resizesCounter_; //Este atributo es para el punto de analizar las políticas
+    //unsigned int resizesCounter_; //Este atributo solo fue usado para el punto de analizar las políticas, por eso está documentado
 
     void Resize(){
-        //cout << "Resize" << endl;
-        capacity_ = capacity_ * 1.5;
+        capacity_ = capacity_ * 1.5; //La política del Resize por defecto es 1.5
         T* storage2_ = new T[capacity_];
         for(int i = 0; i < size_; i++){
             storage2_[i] = storage_[i];
@@ -26,19 +33,17 @@ private:
 
 public:
     Vector(){ //Constructor principal, para inicializar los atributos
-        //cout << "Hi!" << endl;
         capacity_ = 10;
         storage_ = new T[capacity_];
         size_ = 0;
-        resizesCounter_ = 0;
+        //resizesCounter_ = 0;
     }
 
     Vector(unsigned int amount, T elem = T()){//Constructor que inicializa el vector con una cantidad específica
-        cout << "Hi!" << endl;
         capacity_ = amount;
         storage_ = new T[capacity_];
         size_ = 0;
-        resizesCounter_ = 0;
+        //resizesCounter_ = 0;
     }
 
     Vector(const initializer_list<T> vector){//Constructor que inicializa el vector con una cantidad y un dato específico
@@ -49,16 +54,16 @@ public:
             storage_[index++] = i;
         }
         size_ = capacity_;
-        resizesCounter_ = 0;
+        //resizesCounter_ = 0;
     }
 
-    unsigned int size() { //Operacion que devuelve el tamaño hasta el momento del vector
+    unsigned int size() { 
         return size_;
     }
 
-    unsigned int counter(){
+    /*unsigned int counter(){
         return resizesCounter_;
-    }
+    }*/ //Operacion utilizada para hacer un conteo de la cantidad de Resizes que se hacían
 
     unsigned int capacity() const {
         return capacity_;
@@ -68,14 +73,14 @@ public:
         return size_ == 0;
     }
 
-    void print(){ //Operacion que imprime los elementos del vector
+    void print(){ 
         for(int i = 0; i < size(); i++){
             cout << storage_[i] << " ";
         }
         cout << " " << endl;
     }
 
-    T& at(unsigned int position){ //Operacion que devuelve un puntero a lo que hay en position¿?
+    T& at(unsigned int position){ 
         assert(position >= 0 && position < size_);
         return storage_[position];
     }
@@ -98,6 +103,8 @@ public:
         return capacity_ - size_;
     }
 
+// PRIMER PUNTO DE LA TAREA
+
     void insert(unsigned int index, T element){
         if(size_ == capacity_){
             Resize();
@@ -117,6 +124,8 @@ public:
     }
 };
 
+//SEGUNDO PUNTO DE LA TAREA
+
 template <typename T>
 Vector<T> removeDuplicates(Vector<T> &vector){
     unsigned int size = vector.size();
@@ -132,7 +141,9 @@ Vector<T> removeDuplicates(Vector<T> &vector){
     return vector;
 }
 
-void AnalyzeInsertions(){
+//TERCER PUNTO DE LA TAREA
+
+/*void AnalyzeInsertions(){  //Esta operacion sólo fue usada para los sacar los datos necesarios, por eso está documentada
     srand(time(0));
     int num = 0;
     Vector<int> insertions;
@@ -151,15 +162,17 @@ void AnalyzeInsertions(){
     for (int i = 0; i < capacities.size(); i++) {
         file << capacities.at(i) << " ";
     }
-    /*file << "\n\n\nSizes:\n";
+    file << "\n\n\nSizes:\n";
     for (int i = 0; i < sizes.size(); i++) {
         file << sizes.at(i) << " ";
-    }*/
+    }
     file << "\n\n\nCounter: " << insertions.counter() << endl;
 
     // Cerrar el archivo
     file.close();
-}
+}*/
+
+// CUARTO PUNTO DE LA TAREA
 
 void Merge(Vector<int> *totalVector, int left, int mid, int right) {
     int i = left, j = mid + 1;
@@ -215,6 +228,8 @@ Vector<int> mergeSortedVectors(Vector<int> &vector1, Vector<int> &vector2){
 }
 
 int main(){
-    AnalyzeInsertions();
+
+    //Espacio para hacer todas las pruebas necesarias
+
     return 0;
 }
